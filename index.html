@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://futurehealthcaretoday.com/wp-content/uploads/2023/01/Payer-Networks-Featured-750x375.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.5); /* Reduced opacity for better visibility */
+            padding: 20px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 350px; /* Reduced max-width */
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: black; /* Change label color to black */
+        }
+
+        select,
+        input[type="number"] {
+            width: 100%; /* Set width to 100% to occupy full width of the container */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff; /* Blue color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darker shade of blue on hover */
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BMI Calculator</h1>
+        <div class="input-group">
+            <label for="gender">Gender:</label>
+            <select id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="height-feet">Height (feet):</label>
+            <select id="height-feet">
+                <option value="1">1 feet</option>
+                <option value="2">2 feet</option>
+                <option value="3">3 feet</option>
+                <option value="4">4 feet</option>
+                <option value="5">5 feet</option>
+                <option value="6">6 feet</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="height-inches">Height (inches):</label>
+            <select id="height-inches">
+                <option value="0">0 inches</option>
+                <option value="1">1 inches</option>
+                <option value="2">2 inches</option>
+                <option value="3">3 inches</option>
+                <option value="4">4 inches</option>
+                <option value="5">5 inches</option>
+                <option value="6">6 inches</option>
+                <option value="7">7 inches</option>
+                <option value="8">8 inches</option>
+                <option value="9">9 inches</option>
+                <option value="10">10 inches</option>
+                <option value="11">11 inches</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight">
+        </div>
+        <button onclick="calculateBMI()">Calculate BMI</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            const gender = document.getElementById("gender").value;
+            const feet = parseInt(document.getElementById("height-feet").value);
+            const inches = parseInt(document.getElementById("height-inches").value);
+            const weight = parseFloat(document.getElementById("weight").value);
+
+            if (isNaN(weight) || isNaN(feet) || isNaN(inches) || feet <= 0 || inches < 0 || inches >= 12 || weight <= 0) {
+                document.getElementById("result").innerText = "Please enter valid height and weight.";
+                return;
+            }
+
+            const totalHeightInInches = feet * 12 + inches;
+            const heightInMeters = totalHeightInInches * 0.0254;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            const message = `Your BMI is ${bmi.toFixed(2)}.`;
+
+            let status;
+            if (gender === "male") {
+                status = bmi < 18.5 ? "Underweight" : (bmi < 24.9 ? "Normal weight" : (bmi < 29.9 ? "Overweight" : "Obese"));
+            } else {
+                status = bmi < 18.5 ? "Underweight" : (bmi < 23.9 ? "Normal weight" : (bmi < 28.9 ? "Overweight" : "Obese"));
+            }
+
+            document.getElementById("result").innerText = `${message} You are ${status}.`;
+        }
+    </script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDixI_9VC15Z4q8ghPcATBsSa1rRKrNPOw",
+            authDomain: "cloud-eval-e815b.firebaseapp.com",
+            projectId: "cloud-eval-e815b",
+            storageBucket: "cloud-eval-e815b.appspot.com",
+            messagingSenderId: "1029239723296",
+            appId: "1:1029239723296:web:5b1fc1e4ce2a84e2ceb345"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+    </script>
+</body>
+</html>
